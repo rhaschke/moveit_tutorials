@@ -22,6 +22,8 @@ jobs:
     env:
       DOCKER_IMAGE: moveit/moveit:${{ matrix.env.IMAGE }}
       UNDERLAY: /root/ws_moveit/install
+      # Fetch panda-moveit-config from source to avoid installing all its dependencies
+      UPSTREAM_WORKSPACE: github:ros-planning/panda_moveit_config#noetic-devel
       CATKIN_LINT: true
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       BASEDIR: ${{ github.workspace }}/.work
