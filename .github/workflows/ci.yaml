@@ -29,6 +29,11 @@ jobs:
       CXXFLAGS: -Werror -Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls
       CC: ${{ matrix.env.CLANG_TIDY && 'clang' }}
       CXX: ${{ matrix.env.CLANG_TIDY && 'clang++' }}
+      BEFORE_INSTALL_TARGET_DEPENDENCIES: |
+        dpkg -l | grep moveit
+        rosdep check --from-paths /root/ws_moveit/install --ignore-src
+        rosdep check --from-paths /home/runner/work/moveit_tutorials/moveit_tutorials/.work/target_ws/src /root/ws_moveit/install --ignore-src || true
+
 
     name: ${{ matrix.env.IMAGE }}${{ matrix.env.CATKIN_LINT && ' + catkin_lint' || ''}}${{ matrix.env.CLANG_TIDY && ' + clang-tidy' || '' }}
     runs-on: ubuntu-latest
